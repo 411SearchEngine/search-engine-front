@@ -18,6 +18,8 @@ const pageSize = 5;
   loading: loading.models.list,
 }))
 class SearchList extends Component {
+
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -46,6 +48,7 @@ class SearchList extends Component {
   };
 
   render() {
+
     const {
       form,
       list: { list },
