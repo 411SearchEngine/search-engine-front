@@ -5,16 +5,11 @@ import webpackplugin from './plugin.config';
 import defaultSettings from '../src/defaultSettings';
 
 export default {
-
-  base: '/mip-assistant-front',
-  publicPath: '/mip-assistant-front',
-
-
   proxy: {
-    "/api": {
-      "target": "http://localhost:8080",
-      "changeOrigin": true,
-      "pathRewrite": {"^/api": ""}
+    '/api': {
+      target: 'http://localhost:8080',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
     },
   },
 
