@@ -1,11 +1,11 @@
 import React from 'react';
-import RenderAuthorized from '@/components/Authorized';
-import Exception from '@/components/Exception';
-import { getAuthority } from '@/utils/authority';
 import { matchRoutes } from 'react-router-config';
 import intersection from 'lodash/intersection';
 import { formatMessage } from 'umi/locale';
 import Link from 'umi/link';
+import { getAuthority } from '@/utils/authority';
+import Exception from '@/components/Exception';
+import RenderAuthorized from '@/components/Authorized';
 
 const Authorized = RenderAuthorized(getAuthority());
 

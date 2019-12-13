@@ -40,7 +40,7 @@ class SearchList extends Component {
     ];
 
     const mainSearch = (
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', marginTop: '80px' }}>
         <Input.Search
           placeholder="请输入"
           enterButton="搜索"
@@ -55,7 +55,6 @@ class SearchList extends Component {
 
     return (
       <PageHeaderWrapper
-        title="搜索列表"
         content={mainSearch}
         tabList={tabList}
         tabActiveKey={location.pathname.replace(`${match.path}/`, '')}
