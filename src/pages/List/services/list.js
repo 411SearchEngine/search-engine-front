@@ -1,5 +1,5 @@
-import request from '@/utils/request';
+import Request from '@/utils/fetch'
 
-export async function queryProjectNotice() {
-  return request('/engine/find/weather/');
+export function queryProjectNotice(params) {
+  return Request.post(`/engine/search/keyword`, params);
 }

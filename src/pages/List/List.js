@@ -1,72 +1,128 @@
-import React, { Component } from 'react';
+import React, {Component,Fragment} from 'react';
 import router from 'umi/router';
-import { connect } from 'dva';
-import { Input } from 'antd';
+import {connect} from 'dva';
+import { Input, Card, Select, List, Tag, Icon, Avatar, Row, Col, Button } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import moment from 'moment';
+import styles from './Articles.less';
 
-@connect()
+@connect(({weather, loading}) => ({
+  ...weather,
+  submitting: loading.models.weather,
+}))
 class SearchList extends Component {
   handleTabChange = key => {
-    const { match } = this.props;
+    const {match} = this.props;
     switch (key) {
       case 'articles':
         router.push(`${match.url}/articles`);
         break;
-      case 'applications':
-        router.push(`${match.url}/applications`);
-        break;
-      case 'projects':
-        router.push(`${match.url}/projects`);
-        break;
-      default:
-        break;
     }
   };
 
+  state = {
+    keyword: "",
+    page: 0,
+    size: 4
+  }
+
+
+  handleText = (e) => {
+    this.setState({
+      keyword: e.target.value
+    })
+  };
+
+  handleFormSubmit = () => {
+    const {keyword, page, size} = this.state;
+    const submitData = {keyword, page, size}
+
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'weather/fetch',
+      payload: {
+        submitData,
+      },
+    });
+  };
+
+
+
+
   render() {
-    const tabList = [
-      {
-        key: 'articles',
-        tab: '文章',
-      },
-      {
-        key: 'projects',
-        tab: '项目',
-      },
-      {
-        key: 'applications',
-        tab: '应用',
-      },
-    ];
+    const {keyword} = this.state;
+    const {searchModels} = this.props;
+
+    const IconText = ({ type, text }) => (
+      <span>
+        <Icon type={type} style={{ marginRight: 8 }} />
+        {text}
+      </span>
+    );
+
+    const ListContent = ({ data: { content, public_date, type,title, source_url } }) => (
+      <div className={styles.listContent}>
+        <div className={styles.description}>{title}</div>
+        <div className={styles.video}>{type=="video"?"录像":"历史记录"}</div>
+        <div className={styles.extra}>
+          <a href={source_url}>{content}</a> 地址
+          <a href={source_url}>{source_url}</a>
+          <em>{public_date!==null?moment(public_date).format('YYYY-MM-DD HH:mm'):"暂无时间详情"}</em>
+        </div>
+      </div>
+    );
 
     const mainSearch = (
-      <div style={{ textAlign: 'center', marginTop: '80px' }}>
+      <div style={{textAlign: 'center', marginTop: '80px'}}>
         <Input.Search
           placeholder="请输入"
           enterButton="搜索"
           size="large"
           onSearch={this.handleFormSubmit}
-          style={{ width: 522 }}
+          style={{width: 522}}
+          value={keyword.trim()}
+          onChange={this.handleText}
         />
       </div>
     );
 
-    const { match, children, location } = this.props;
 
     return (
       <PageHeaderWrapper
         content={mainSearch}
-        tabList={tabList}
-        tabActiveKey={location.pathname.replace(`${match.path}/`, '')}
-        onTabChange={this.handleTabChange}
+        searchModels={searchModels}
       >
-        {children}
-        {/* <Switch>
-          {routes.map(item => (
-            <Route key={item.key} path={item.path} component={item.component} exact={item.exact} />
-          ))}
-        </Switch> */}
+        <Fragment>
+          <Card
+            style={{ marginTop: 24 }}
+            bordered={false}
+            bodyStyle={{ padding: '8px 32px 32px 32px' }}
+          >
+            <List
+              size="large"
+              rowKey="id"
+              itemLayout="vertical"
+              dataSource={searchModels}
+              renderItem={item => (
+                <List.Item
+                  key={item.id}
+                  extra={<div className={styles.listItemExtra} />}
+                >
+                  <List.Item.Meta
+                    title={
+                      <a className={styles.listItemMetaTitle} href={item.href}>
+                        {item.title}
+                      </a>
+                    }
+                  />
+                  <ListContent data={item} />
+                </List.Item>
+              )}
+            />
+          </Card>
+        </Fragment>
       </PageHeaderWrapper>
+
     );
   }
 }

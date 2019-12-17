@@ -21,9 +21,6 @@ class index extends PureComponent {
 
   test = () => {
     const {dispatch} = this.props;
-    console.log(this.props);
-    console.log("1111111111111111111111")
-    console.log("2")
     dispatch({
       type: 'weather/fetch',
     });
@@ -39,7 +36,6 @@ class index extends PureComponent {
           onSearch={this.handleSearh}
           style={{width: 522}}
         />
-        <Button onClick={this.test}>test</Button>
       </div>
     );
   }

@@ -4,16 +4,20 @@ export default {
   namespace: 'weather',
 
   state: {
-    weather: {}
+    searchModels:[]
   },
 
   effects: {
-    * fetch(_, {call, put}) {
-      console.log("123")
-      const response = yield call(queryProjectNotice);
+    * fetch({payload}, {call, put}) {
+      const {submitData} = payload;
+      const response = yield call(queryProjectNotice, submitData);
+      const {searchModels} = response.data;
+      console.log("searchModels============", searchModels);
       yield put({
         type: 'stateWillBeUpdated',
-        payload: response,
+        payload: {
+          searchModels,
+        }
       });
     },
   },
