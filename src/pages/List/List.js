@@ -11,19 +11,11 @@ import styles from './Articles.less';
   submitting: loading.models.weather,
 }))
 class SearchList extends Component {
-  handleTabChange = key => {
-    const {match} = this.props;
-    switch (key) {
-      case 'articles':
-        router.push(`${match.url}/articles`);
-        break;
-    }
-  };
 
   state = {
     keyword: "",
     page: 0,
-    size: 4
+    size: 1000
   }
 
 
@@ -46,19 +38,9 @@ class SearchList extends Component {
     });
   };
 
-
-
-
   render() {
     const {keyword} = this.state;
     const {searchModels} = this.props;
-
-    const IconText = ({ type, text }) => (
-      <span>
-        <Icon type={type} style={{ marginRight: 8 }} />
-        {text}
-      </span>
-    );
 
     const ListContent = ({ data: { content, public_date, type,title, source_url } }) => (
       <div className={styles.listContent}>
@@ -85,7 +67,6 @@ class SearchList extends Component {
         />
       </div>
     );
-
 
     return (
       <PageHeaderWrapper
