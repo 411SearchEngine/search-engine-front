@@ -10,6 +10,7 @@ export default {
 
   effects: {
     *fetch(_, { call, put }) {
+      console.log("aaaaa")
       const response = yield call(queryUsers);
       yield put({
         type: 'save',

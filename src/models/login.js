@@ -18,6 +18,8 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
+
+      console.log("432")
       const response = yield call(accountLogin, payload);
       yield put({
         type: 'setToken',

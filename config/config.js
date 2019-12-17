@@ -6,8 +6,8 @@ import defaultSettings from '../src/defaultSettings';
 
 export default {
   proxy: {
-    '/api': {
-      target: 'http://localhost:8080',
+    '/engine': {
+      target: 'http://localhost:3000',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },
