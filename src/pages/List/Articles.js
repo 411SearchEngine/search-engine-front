@@ -11,6 +11,7 @@ const pageSize = 5;
 class SearchList extends Component {
 
 
+
   fetchMore = () => {
     const { dispatch } = this.props;
     dispatch({
@@ -27,9 +28,6 @@ class SearchList extends Component {
     if(searchModels===undefined){
       searchModels=[]
     }
-
-
-    console.log("65432",searchModels)
 
 
     const IconText = ({ type, text }) => (

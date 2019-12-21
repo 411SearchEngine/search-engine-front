@@ -11,12 +11,22 @@ import {connect} from "dva";
 }))
 class index extends PureComponent {
 
-  componentDidMount() {
 
+  state = {
+    keyword: " "
   }
 
+  handleText = (e) => {
+    this.setState({
+      keyword: e.target.value
+    })
+  };
+
   handleSearh = () => {
-    router.push('/list/search');
+    const {keyword} = this.state;
+
+    console.log("1231", keyword);
+    router.push(`/list/search/articles/${keyword}`);
   };
 
   test = () => {
@@ -27,13 +37,16 @@ class index extends PureComponent {
   };
 
   render() {
+    const {keyword} = this.state;
     return (
       <div style={{textAlign: 'center'}} className={styles.input}>
         <Input.Search
           placeholder="请输入"
           enterButton="搜索"
           size="large"
+          value={keyword}
           onSearch={this.handleSearh}
+          onChange={this.handleText}
           style={{width: 522}}
         />
       </div>

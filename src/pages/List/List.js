@@ -1,7 +1,7 @@
-import React, {Component,Fragment} from 'react';
+import React, {Component, Fragment} from 'react';
 import router from 'umi/router';
 import {connect} from 'dva';
-import { Input, Card, Select, List, Tag, Icon, Avatar, Row, Col, Button } from 'antd';
+import {Input, Card, Select, List, Tag, Icon, Avatar, Row, Col, Button} from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import moment from 'moment';
 import styles from './Articles.less';
@@ -12,12 +12,18 @@ import styles from './Articles.less';
 }))
 class SearchList extends Component {
 
-  state = {
-    keyword: "",
-    page: 0,
-    size: 1000
-  }
 
+  constructor(props) {
+    super(props)
+    const {match: {params}} = props
+    const {keyword} = params
+    this.state = {
+      keyword,
+      page: 0,
+      size: 1000
+    }
+    this.handleFormSubmit();
+  }
 
   handleText = (e) => {
     this.setState({
@@ -42,14 +48,14 @@ class SearchList extends Component {
     const {keyword} = this.state;
     const {searchModels} = this.props;
 
-    const ListContent = ({ data: { content, public_date, type,title, source_url } }) => (
+    const ListContent = ({data: {content, public_date, type, title, source_url}}) => (
       <div className={styles.listContent}>
         <div className={styles.description}>{title}</div>
-        <div className={styles.video}>{type=="video"?"录像":"历史记录"}</div>
+        <div className={styles.video}>{type == "video" ? "录像" : "历史记录"}</div>
         <div className={styles.extra}>
           <a href={source_url}>{content}</a> 地址
           <a href={source_url}>{source_url}</a>
-          <em>{public_date!==null?moment(public_date).format('YYYY-MM-DD HH:mm'):"暂无时间详情"}</em>
+          <em>{public_date !== null ? moment(public_date).format('YYYY-MM-DD HH:mm') : "暂无时间详情"}</em>
         </div>
       </div>
     );
@@ -75,9 +81,9 @@ class SearchList extends Component {
       >
         <Fragment>
           <Card
-            style={{ marginTop: 24 }}
+            style={{marginTop: 24}}
             bordered={false}
-            bodyStyle={{ padding: '8px 32px 32px 32px' }}
+            bodyStyle={{padding: '8px 32px 32px 32px'}}
           >
             <List
               size="large"
@@ -87,7 +93,7 @@ class SearchList extends Component {
               renderItem={item => (
                 <List.Item
                   key={item.id}
-                  extra={<div className={styles.listItemExtra} />}
+                  extra={<div className={styles.listItemExtra}/>}
                 >
                   <List.Item.Meta
                     title={
@@ -96,7 +102,7 @@ class SearchList extends Component {
                       </a>
                     }
                   />
-                  <ListContent data={item} />
+                  <ListContent data={item}/>
                 </List.Item>
               )}
             />
